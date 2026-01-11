@@ -23,28 +23,27 @@ genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 # Lưu ý: Phải dùng ĐÚNG model mà bạn đã dùng ở máy Local (Colab)
 # Theo ảnh bạn gửi là BAAI/bge-m3
 @st.cache_resource
-def load_chroma_data():
-    try:
-        # Khởi tạo Client với đường dẫn tuyệt đối
-        chroma_client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
-        
-        # Sử dụng model bge-m3 như trong ảnh bạn hiển thị
-        embedding_func = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name="BAAI/bge-m3"
-        )
+def load_collection():
+    # 1. Ép sử dụng đường dẫn tuyệt đối
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "chroma_db")
+    
+    chroma_client = chromadb.PersistentClient(path=db_path)
 
-        # Lấy collection (Tên phải khớp hoàn toàn với lúc bạn tạo ở Colab)
-        # Nếu ở Colab bạn đặt là 'dichvucong_rag' thì điền vào đây
-        collection = chroma_client.get_collection(
-            name="dichvucong_rag", 
-            embedding_function=embedding_func
-        )
-        return collection
-    except Exception as e:
-        st.error(f"Lỗi kết nối Database: {e}")
-        return None
+    # 2. Phải dùng ĐÚNG model embedding đã dùng lúc tạo database
+    # Trong ảnh bạn gửi là BAAI/bge-m3, hãy dùng nó
+    embedding_func = embedding_functions.SentenceTransformerEmbeddingFunction(
+        model_name="BAAI/bge-m3"
+    )
 
-collection = load_chroma_data()
+    # 3. Sử dụng get_collection (không dùng get_or_create) để kiểm tra
+    # Phải khớp tên "dichvucong_rag"
+    collection = chroma_client.get_collection(
+        name="dichvucong_rag", 
+        embedding_function=embedding_func
+    )
+
+    return collection
 
 # ================== 3. HÀM XỬ LÝ TRUY VẤN (RAG) ==================
 def query_rag(query: str, top_k: int):
