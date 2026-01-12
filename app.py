@@ -1,10 +1,16 @@
 import streamlit as st
+
+st.set_page_config(
+    page_title="Chatbot tư vấn thủ tục hành chính trẻ em dưới 6 tuổi",
+    page_icon="🤖",
+    layout="centered"
+)
+
 import os
 import json
-
 import chromadb
 from chromadb.utils import embedding_functions
-from sentence_transformers import SentenceTransformer
+from sentence_transformers import SentenceTransformer SentenceTransformer
 
 # ====== CẤU HÌNH ======
 CHROMA_DB_PATH = "./chroma_db"
