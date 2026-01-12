@@ -131,11 +131,6 @@ YÊU CẦU ĐỊNH DẠNG:
     return response
 
 # ================== GIAO DIỆN CHÍNH ==================
-st.set_page_config(
-    page_title="Chatbot tư vấn thủ tục hành chính trẻ em dưới 6 tuổi",
-    page_icon="🤖",
-    layout="centered"
-)
 
 # ================== TIÊU ĐỀ ==================
 st.title("🤖 Chatbot tư vấn thủ tục hành chính trẻ em dưới 6 tuổi")
