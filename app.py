@@ -10,7 +10,8 @@ import os
 import json
 import chromadb
 from chromadb.utils import embedding_functions
-from sentence_transformers import SentenceTransformer SentenceTransformer
+from sentence_transformers import SentenceTransformer
+
 
 # ====== CẤU HÌNH ======
 CHROMA_DB_PATH = "./chroma_db"
